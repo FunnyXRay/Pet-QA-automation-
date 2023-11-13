@@ -1,10 +1,9 @@
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
-from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators
+from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators
 from pages.base_page import BasePage
 import random
-
 
 
 class TextBoxPage(BasePage):
@@ -64,3 +63,16 @@ class CheckBoxPage(BasePage):
             data.append(item.text)
         return str(data).lower().replace(' ', '')
 
+
+class RadioButtonPage(BasePage):
+    locators = RadioButtonPageLocators
+
+    def click_on_the_radio_button(self, choice):
+        choices = {
+            'yes': self.locators.YES_RADIOBUTTON,
+            'impressive': self.locators.IMPRESSIVE_RADIOBUTTON,
+            'no': self.locators.NO_RADIOBUTTON}
+        self.element_is_visible(choices[choice]).click()
+
+    def get_output_result(self):
+        return self.element_is_present(self.locators.OUTPUT_RESULT).text
